@@ -1,4 +1,7 @@
+
+import datetime
 from django.db import models
+from django.utils import timezone
 
 
 class Question(models.Model):
@@ -7,6 +10,13 @@ class Question(models.Model):
 
     def __str__(self):
         return self.question_text
+
+    def was_published_recently(self):
+        '''
+        Question의 게시일자가 현재시각에서 1일 전보다 빠른지, 느린지 를 리턴
+        :return:
+        '''
+        return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
 
 
 class Choice(models.Model):
